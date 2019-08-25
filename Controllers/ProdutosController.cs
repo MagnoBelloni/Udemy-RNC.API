@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RNC.API.Data;
 
@@ -87,6 +88,18 @@ namespace RNC.API.Controllers
         public IActionResult ObterPorCodigo(string codigo)
         {
             return Ok("Método obter por código versão 2 --Beta");
+        }
+
+        [HttpGet("")]
+        [ApiVersion("3.0")]
+        public IActionResult ObterPorCodigo()
+        {
+            List<string> lista = new List<string>();
+            for (int i = 0; i < 1000; i++)
+            {
+                lista.Add($"Indice i: {i}");
+            }            
+            return Ok(string.Join(",",lista));
         }
     }
 }

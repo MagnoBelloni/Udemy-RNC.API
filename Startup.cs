@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,13 @@ namespace RNC.API
             services.AddApiVersioning();
 
             services.AddResponseCaching();
+
+            services.AddResponseCompression(opt=>
+            {
+                //opt.Providers.Add<GzipCompressionProvider>();
+                opt.Providers.Add<BrotliCompressionProvider>();
+                opt.EnableForHttps = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +62,7 @@ namespace RNC.API
 
             app.UseHttpsRedirection();
             app.UseResponseCaching();
+            app.UseResponseCompression();
             app.UseMvc();
         }
     }
